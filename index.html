@@ -277,7 +277,7 @@ dialog.howto::backdrop{background:rgba(0,0,0,.6)}
 
 <script>
 // ダウンロード先URL: ZIPを置いた場所（GitHub Releasesなど）に書き換えてください
-const DOWNLOAD_URL = "https://github.com/YOUR_NAME/cnvmp3-button/releases/latest";
+const DOWNLOAD_URL = "https://github.com/Azuk1-azq/cnvmp3-easy/raw/refs/heads/main/CNVMP3BUTTON.zip";
 document.querySelectorAll("[data-dl]").forEach(a => {
   if (a.getAttribute("href") === "#") a.href = DOWNLOAD_URL;
   else { a.addEventListener("click", e => { if (DOWNLOAD_URL.includes("YOUR_NAME")) return; e.preventDefault(); window.open(DOWNLOAD_URL, "_blank", "noopener"); }); }
