@@ -1,0 +1,256 @@
+/* ===== テーマ色（content.jsが <html data-cnv-theme="dark|light"> を設定） ===== */
+:root{--cnv-text:#0f0f0f;--cnv-text2:#606060;--cnv-chip:rgba(0,0,0,.05);--cnv-hover:rgba(0,0,0,.1);--cnv-line:rgba(0,0,0,.1);--cnv-menu:#fff;--cnv-accent:#065fd4}
+html[data-cnv-theme="dark"]{--cnv-text:#f1f1f1;--cnv-text2:#aaa;--cnv-chip:rgba(255,255,255,.1);--cnv-hover:rgba(255,255,255,.2);--cnv-line:rgba(255,255,255,.2);--cnv-menu:#282828;--cnv-accent:#3ea6ff}
+
+/* ===== 音質・画質セレクト ===== */
+.cnv-combo{display:inline-flex;align-items:center;border-radius:18px;background:var(--cnv-chip);overflow:hidden;flex:none}
+.cnv-combo .cnv-pill{background:transparent;border-radius:0}
+.cnv-combo .cnv-pill:hover,.cnv-combo .cnv-q:hover{background-color:var(--cnv-hover)}
+.cnv-q{appearance:none;-webkit-appearance:none;cursor:pointer;height:36px;padding:0 24px 0 10px;border:0;border-left:1px solid var(--cnv-line);
+  background-color:transparent;color:var(--cnv-text);font:500 13px "Roboto","Arial",sans-serif;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='%23888' d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat:no-repeat;background-position:right 4px center;background-size:20px}
+.cnv-q option{background:var(--cnv-menu);color:var(--cnv-text)}
+.cnv-short-item .cnv-q{height:24px;margin-top:6px;padding:0 16px 0 8px;border:0;border-radius:12px;background-color:var(--cnv-chip);font-size:11px;background-position:right 0 center;background-size:16px}
+#cnv-actions.cnv-float .cnv-combo{background:rgba(0,0,0,.6)}
+#cnv-actions.cnv-float .cnv-pill,#cnv-actions.cnv-float .cnv-q{color:#fff}
+#cnv-actions.cnv-float .cnv-q option{background:#282828;color:#fff}
+
+/* ===== YouTubeのマテリアルデザインに合わせたスタイル（ライト/ダーク自動追従） ===== */
+
+/* --- 動画下: トーナルボタン（高評価・共有ボタンと同じ見た目） --- */
+#cnv-actions.cnv-inline { display: inline-flex; align-items: center; gap: 8px; margin-left: 8px; }
+.cnv-pill {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 16px 0 12px;
+  border-radius: 18px;
+  background: var(--cnv-chip);
+  color: var(--cnv-text);
+  font: 500 14px/36px "Roboto", "Arial", sans-serif;
+  white-space: nowrap;
+}
+.cnv-pill:hover { background: var(--cnv-hover); }
+.cnv-pill:active { background: var(--cnv-line); }
+.cnv-pill svg { display: block; flex: none; }
+
+/* --- Shorts: 縦のアクション列（丸ボタン＋ラベル） --- */
+#cnv-actions.cnv-shorts { display: flex; flex-direction: column; align-items: center; }
+.cnv-short-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+}
+.cnv-round {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--cnv-chip);
+  color: var(--cnv-text);
+}
+.cnv-round:hover { background: var(--cnv-hover); }
+.cnv-round:active { background: var(--cnv-line); }
+.cnv-round svg { display: block; }
+.cnv-label {
+  cursor: pointer;
+  margin-top: 4px;
+  color: var(--cnv-text);
+  font: 400 12px/16px "Roboto", "Arial", sans-serif;
+}
+
+/* --- フォールバック: 動画の左上に重ねる --- */
+#cnv-actions.cnv-float {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 2147483645;
+  display: flex;
+  gap: 8px;
+}
+#cnv-actions.cnv-float .cnv-pill {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+#cnv-actions.cnv-float .cnv-pill:hover { background: rgba(0, 0, 0, 0.8); }
+
+/* --- cnvmp3のiframe: 通常は非表示 --- */
+#cnv-frame-wrap {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+  width: 900px;
+  height: 700px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2147483646;
+}
+#cnv-frame-wrap iframe { width: 100%; height: 100%; border: 0; background: #fff; }
+#cnv-frame-wrap.cnv-visible {
+  left: auto;
+  right: 16px;
+  bottom: 190px;
+  top: auto;
+  width: 420px;
+  height: 500px;
+  max-height: calc(100vh - 220px);
+  opacity: 1;
+  pointer-events: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* --- 進捗カード（YouTubeのスナックバー/メニュー風） --- */
+#cnv-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 340px;
+  box-sizing: border-box;
+  z-index: 2147483647;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--cnv-menu);
+  color: var(--cnv-text);
+  font: 400 14px/20px "Roboto", "Arial", sans-serif;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--cnv-line);
+}
+#cnv-toast .cnv-row { display: flex; align-items: center; justify-content: space-between; }
+#cnv-toast .cnv-title { font-size: 16px; line-height: 24px; font-weight: 500; }
+#cnv-toast .cnv-close {
+  all: unset;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  margin: -4px -6px -4px 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cnv-text2);
+}
+#cnv-toast .cnv-close:hover { background: var(--cnv-hover); }
+#cnv-toast .cnv-status {
+  margin: 4px 0 12px;
+  color: var(--cnv-text2);
+  word-break: break-word;
+}
+
+/* プログレスバー */
+#cnv-toast .cnv-bar {
+  position: relative;
+  height: 4px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: var(--cnv-line);
+}
+#cnv-toast .cnv-bar::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 2px;
+  background: var(--cnv-accent);
+}
+#cnv-toast[data-kind="work"] .cnv-bar::after {
+  width: 40%;
+  animation: cnv-slide 1.4s ease-in-out infinite;
+}
+#cnv-toast[data-kind="ok"] .cnv-bar::after { background: #2ba640; }
+#cnv-toast[data-kind="err"] .cnv-bar::after { background: #d93025; }
+@keyframes cnv-slide {
+  0% { left: -40%; }
+  100% { left: 100%; }
+}
+
+/* 完了・失敗の見た目 */
+#cnv-toast[data-kind="ok"] .cnv-title { color: #2ba640; font-size: 18px; }
+#cnv-toast[data-kind="ok"] .cnv-status { color: var(--cnv-text); }
+#cnv-toast[data-kind="err"] .cnv-title { color: #d93025; }
+
+/* ボタン類（トーナルボタン） */
+#cnv-toast .cnv-folder,
+#cnv-toast .cnv-coffee {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 36px;
+  margin-top: 12px;
+  border-radius: 18px;
+  background: var(--cnv-chip);
+  color: var(--cnv-text);
+  font-weight: 500;
+  text-decoration: none;
+}
+#cnv-toast .cnv-folder:hover,
+#cnv-toast .cnv-coffee:hover { background: var(--cnv-hover); }
+#cnv-toast .cnv-folder[hidden] { display: none; }
+#cnv-toast .cnv-show {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--cnv-accent);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+#cnv-toast .cnv-show:hover { text-decoration: underline; }
+
+/* 独自プログレス（--p で幅を制御） */
+#cnv-toast .cnv-bar::after{width:var(--p,0%);transition:width .25s linear}
+#cnv-toast[data-kind="work"] .cnv-bar::after{width:var(--p,0%);animation:none;left:0}
+#cnv-toast .cnv-hbtns{display:flex;align-items:center}
+#cnv-toast .cnv-gear{all:unset;cursor:pointer;width:32px;height:32px;margin:-4px 0;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--cnv-text2)}
+#cnv-toast .cnv-gear:hover{background:var(--cnv-hover)}
+#cnv-toast .cnv-show[hidden]{display:none}
+
+/* 今回のみ変更中の値は色で分かるように */
+.cnv-q.cnv-temp{color:var(--cnv-accent)}
+
+/* Shorts: ボタン列の一番上に置くので、下に余白を空ける */
+#cnv-actions.cnv-shorts{margin-bottom:16px}
+#cnv-actions.cnv-shorts .cnv-short-item:first-child{margin-top:0}
+
+.cnv-q[hidden]{display:none!important}
+
+/* 文言が空のときは行ごと詰める */
+#cnv-toast .cnv-status:empty{display:none}
+#cnv-toast .cnv-status:empty+.cnv-bar{margin-top:12px}
+
+/* --- アップデート通知（左下） --- */
+#cnv-update {
+  position: fixed; left: 24px; bottom: 24px; width: 340px; box-sizing: border-box;
+  z-index: 2147483647; padding: 16px; border-radius: 12px;
+  background: var(--cnv-menu); color: var(--cnv-text);
+  font: 400 14px/20px "Roboto", "Arial", sans-serif;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3); border: 1px solid var(--cnv-line);
+}
+#cnv-update .cnv-row { display: flex; align-items: center; justify-content: space-between; }
+#cnv-update .cnv-title { font-size: 16px; line-height: 24px; font-weight: 500; }
+#cnv-update .cnv-close {
+  all: unset; cursor: pointer; width: 32px; height: 32px; margin: -4px -6px -4px 0; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; color: var(--cnv-text2);
+}
+#cnv-update .cnv-close:hover { background: var(--cnv-hover); }
+#cnv-update .cnv-status { margin: 4px 0 12px; color: var(--cnv-text2); word-break: break-word; }
+#cnv-update .cnv-updbtn {
+  all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; justify-content: center;
+  width: 100%; height: 36px; border-radius: 18px; background: var(--cnv-chip); color: var(--cnv-text); font-weight: 500;
+}
+#cnv-update .cnv-updbtn:hover { background: var(--cnv-hover); }

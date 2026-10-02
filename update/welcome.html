@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>cnvmp3 ボタン</title>
+<style>
+:root{--brand:#ff0033;--bg:#f6f6f8;--card:#fff;--surface:#f4f4f6;--text:#0f0f0f;--text2:#606060;--line:rgba(0,0,0,.09);--hover:rgba(0,0,0,.06);--shadow:0 1px 2px rgba(0,0,0,.06),0 12px 40px rgba(0,0,0,.08);--glow1:rgba(255,0,51,.10);--glow2:rgba(62,130,255,.12)}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0b0d;--card:#17171a;--surface:#202024;--text:#f1f1f1;--text2:#a0a0a8;--line:rgba(255,255,255,.1);--hover:rgba(255,255,255,.08);--shadow:0 1px 2px rgba(0,0,0,.5),0 16px 48px rgba(0,0,0,.5);--glow1:rgba(255,0,51,.16);--glow2:rgba(62,130,255,.14)}}
+*{box-sizing:border-box}
+html{min-height:100%}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px 16px;color:var(--text);
+  font:400 15px/22px Roboto,"Noto Sans JP",system-ui,sans-serif;
+  background:radial-gradient(60% 50% at 12% 0%,var(--glow1),transparent 70%),radial-gradient(50% 45% at 100% 100%,var(--glow2),transparent 70%),var(--bg)}
+svg{display:block;flex:none}
+.card{width:100%;max-width:520px;padding:32px;border-radius:28px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow)}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:40px;height:28px;border-radius:9px;background:linear-gradient(135deg,#ff3355,#e5001f);display:grid;place-items:center;color:#fff;box-shadow:0 4px 12px rgba(229,0,31,.35)}
+.brand b{font-size:20px;line-height:28px;font-weight:700;letter-spacing:-.2px}
+
+.stepper{display:flex;gap:8px;list-style:none;margin:22px 0 26px;padding:0}
+.stepper li{flex:1;display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:16px;font-weight:500;color:var(--text2)}
+.stepper li::before{content:"";height:4px;border-radius:2px;background:var(--line);transition:background .3s,opacity .3s}
+.stepper li[data-state="active"]{color:var(--text)}
+.stepper li[data-state="active"]::before{background:var(--brand)}
+.stepper li[data-state="done"]::before{background:var(--brand);opacity:.4}
+
+section:not([hidden]){animation:in .35s cubic-bezier(.2,.8,.2,1) both}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.title{margin:0 0 4px;font-size:22px;line-height:30px;font-weight:700;letter-spacing:-.3px}
+.lead{margin:0 0 20px;color:var(--text2)}
+
+/* 言語 */
+.langs{display:grid;gap:12px}
+.lang{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:16px;width:100%;padding:16px 18px;border-radius:20px;border:1px solid var(--line);background:var(--surface);cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s}
+.lang:hover{transform:translateY(-2px);border-color:var(--brand);box-shadow:0 8px 24px rgba(255,0,51,.12)}
+.lang:active{transform:none}
+.lang .g{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:rgba(255,0,51,.1);color:var(--brand);font:700 20px/1 Roboto,"Noto Sans JP",sans-serif}
+.lang b{flex:1;font-size:18px;font-weight:600}
+.lang svg{color:var(--text2)}
+
+/* 品質 */
+.group{padding:16px;margin-bottom:12px;border-radius:20px;border:1px solid var(--line);background:var(--surface)}
+.gh{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-weight:600}
+.gh i{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:rgba(255,0,51,.1);color:var(--brand)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.qchip{all:unset;cursor:pointer;display:inline-flex;align-items:center;height:38px;padding:0 14px;border-radius:19px;border:1.5px solid var(--line);background:var(--card);color:var(--text);font:500 14px/1 Roboto,"Noto Sans JP",sans-serif;transition:background .15s,border-color .15s,color .15s,transform .1s}
+.qchip:hover{background:var(--hover)}
+.qchip:active{transform:scale(.97)}
+.qchip[aria-pressed="true"]{border-color:var(--brand);background:rgba(255,0,51,.1);color:var(--brand)}
+.qchip small{margin-left:8px;padding:2px 7px;border-radius:9px;background:var(--brand);color:#fff;font-size:10px;font-weight:700;line-height:12px}
+.list{padding:2px 16px;margin:16px 0 20px;border-radius:20px;border:1px solid var(--line);background:var(--surface)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0}
+.row+.row{border-top:1px solid var(--line)}
+.row small{display:block;margin-top:2px;color:var(--text2);font-size:12px;line-height:16px}
+.sw{position:relative;flex:none;width:44px;height:26px}
+.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;z-index:1}
+.sw span{position:absolute;inset:0;border-radius:13px;background:var(--text2);opacity:.45;transition:.2s}
+.sw span::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:.2s}
+.sw input:checked+span{background:var(--brand);opacity:1}
+.sw input:checked+span::after{transform:translateX(18px)}
+.sw input:focus-visible+span{outline:2px solid var(--brand);outline-offset:3px}
+
+/* ボタン */
+.btn{all:unset;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:50px;border-radius:25px;cursor:pointer;font:600 15px/1 Roboto,"Noto Sans JP",sans-serif;text-decoration:none;transition:transform .15s,filter .15s,box-shadow .15s}
+.btn.primary{background:linear-gradient(135deg,#ff2d4f,#e5001f);color:#fff;box-shadow:0 8px 20px rgba(229,0,31,.35)}
+.btn.primary:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.primary:active{transform:none}
+.link{all:unset;display:block;margin:12px auto 0;padding:8px 16px;border-radius:16px;color:var(--text2);font-weight:500;cursor:pointer}
+.link:hover{background:var(--hover);color:var(--text)}
+:is(.lang,.qchip,.btn,.link):focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+
+/* 完了 */
+.done{text-align:center}
+.check{width:72px;height:72px;margin:4px auto 16px;color:#2ba640}
+.check circle{fill:rgba(43,166,64,.12);stroke:currentColor;stroke-width:2;stroke-dasharray:176;stroke-dashoffset:176;animation:draw .6s .1s ease forwards}
+.check path{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30;animation:draw .4s .55s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.mock{display:flex;justify-content:center;align-items:center;gap:8px;margin:20px 0 24px;padding:14px;border-radius:20px;background:var(--surface);border:1px dashed var(--line);flex-wrap:wrap}
+.pill{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:18px;background:var(--hover);font-weight:500;font-size:14px}
+.pill.hl{background:rgba(255,0,51,.1);color:var(--brand);box-shadow:0 0 0 1.5px var(--brand)}
+[hidden]{display:none!important}
+@media(max-width:480px){.card{padding:24px 20px;border-radius:24px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.check circle,.check path{stroke-dashoffset:0}}
+</style></head><body>
+<main class="card">
+  <div class="brand"><div class="logo"><svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg></div><b>cnvmp3 ボタン</b></div>
+  <ol class="stepper" id="stepper"><li data-state="active"><span data-i18n="wStep1"></span></li><li data-state="todo"><span data-i18n="wStep2"></span></li><li data-state="todo"><span data-i18n="wStep3"></span></li></ol>
+
+  <section data-step="1">
+    <p class="title" data-i18n="wLangTitle"></p>
+    <div class="langs" style="margin-top:20px">
+      <button class="lang" id="pick-ja" type="button"><span class="g">あ</span><b>日本語</b><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.4 6 8 7.4l4.6 4.6L8 16.6 9.4 18l6-6z"/></svg></button>
+      <button class="lang" id="pick-en" type="button"><span class="g">A</span><b>English</b><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M9.4 6 8 7.4l4.6 4.6L8 16.6 9.4 18l6-6z"/></svg></button>
+    </div>
+  </section>
+
+  <section data-step="2" hidden>
+    <p class="title" data-i18n="wQTitle"></p>
+    <p class="lead" data-i18n="wQDesc"></p>
+    <div class="group"><div class="gh"><i><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></i><span data-i18n="wAudio"></span></div><div class="chips" id="chips-mp3"></div></div>
+    <div class="group"><div class="gh"><i><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg></i><span data-i18n="wVideo"></span></div><div class="chips" id="chips-mp4"></div></div>
+    <div class="list">
+      <div class="row"><div data-i18n="sound"></div><label class="sw"><input type="checkbox" id="sound" checked><span></span></label></div>
+      <div class="row"><div><span data-i18n="tempMenu"></span><small data-i18n="tempMenuDesc"></small></div><label class="sw"><input type="checkbox" id="tempMenu" checked><span></span></label></div>
+    </div>
+    <button class="btn primary" id="go" type="button"><span data-i18n="wGo"></span></button>
+    <button class="link" id="back" type="button" data-i18n="wBack"></button>
+  </section>
+
+  <section data-step="3" class="done" hidden>
+    <svg class="check" viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="28"/><path d="M24 37l8 8 16-17"/></svg>
+    <p class="title" data-i18n="wDoneTitle"></p>
+    <p class="lead" data-i18n="wDoneDesc" style="margin-bottom:0"></p>
+    <div class="mock" aria-hidden="true"><span class="pill"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/></svg></span><span class="pill hl"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>MP3</span><span class="pill hl"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>MP4</span></div>
+    <a class="btn primary" href="https://www.youtube.com/"><span data-i18n="wOpenYt"></span></a>
+  </section>
+</main>
+<script src="i18n.js"></script>
+<script src="welcome.js"></script>
+</body></html>

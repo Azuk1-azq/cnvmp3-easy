@@ -1,0 +1,75 @@
+{
+  "manifest_version": 3,
+  "name": "cnvmp3 ボタン",
+  "version": "3.8",
+  "description": "YouTube上のMP3/MP4ボタンから、cnvmp3をバックグラウンドで操作して変換・保存します。",
+  "permissions": [
+    "alarms",
+    "declarativeNetRequest",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://cnvmp3.com/*",
+    "*://*.cnvmp3.com/*",
+    "https://raw.githubusercontent.com/*",
+    "https://api.github.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "frame_rules",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "i18n.js",
+        "content.js"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://cnvmp3.com/*",
+        "*://*.cnvmp3.com/*"
+      ],
+      "js": [
+        "cnvmp3.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "cnvmp3 ボタンの設定",
+    "default_popup": "options.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

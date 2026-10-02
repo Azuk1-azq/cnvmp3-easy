@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8"><title>cnvmp3 ボタン</title>
+<style>
+:root{--bg:#fff;--text:#0f0f0f;--text2:#606060;--chip:rgba(0,0,0,.05);--line:rgba(0,0,0,.1);--accent:#065fd4}
+@media(prefers-color-scheme:dark){:root{--bg:#0f0f0f;--text:#f1f1f1;--text2:#aaa;--chip:rgba(255,255,255,.1);--line:rgba(255,255,255,.15);--accent:#3ea6ff}}
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:640px;padding:32px 20px;background:var(--bg);color:var(--text);font:400 15px/24px Roboto,"Noto Sans JP",system-ui,sans-serif}
+h1{margin:0 0 20px;font-size:20px;line-height:28px}
+.step{display:flex;gap:12px;margin:0 0 20px}
+.n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step p{margin:2px 0 10px}
+.btn{display:inline-flex;align-items:center;height:40px;padding:0 20px;border:0;border-radius:20px;background:var(--text);color:var(--bg);font:500 14px Roboto,"Noto Sans JP",system-ui,sans-serif;cursor:pointer}
+img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff}
+</style></head><body>
+<h1 data-i18n="guideTitle"></h1>
+<div class="step"><div class="n">1</div><div><p data-i18n="guideStep1"></p><button type="button" class="btn" id="openExt" data-i18n="guideOpenExt"></button></div></div>
+<div class="step"><div class="n">2</div><div><p data-i18n="guideStep2"></p><img src="folder-guide.png" id="shot" alt=""></div></div>
+<div class="step"><div class="n">3</div><div><p data-i18n="guideStep3"></p></div></div>
+<div class="step"><div class="n">4</div><div><p data-i18n="guideStep4"></p></div></div>
+<script src="i18n.js"></script>
+<script src="guide.js"></script>
+</body></html>

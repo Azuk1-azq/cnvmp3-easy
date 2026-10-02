@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8"><title>cnvmp3 ボタン</title>
+<style>
+:root{--bg:#fff;--text:#0f0f0f;--text2:#606060;--chip:rgba(0,0,0,.05);--line:rgba(0,0,0,.1);--accent:#065fd4}
+@media(prefers-color-scheme:dark){:root{--bg:#0f0f0f;--text:#f1f1f1;--text2:#aaa;--chip:rgba(255,255,255,.1);--line:rgba(255,255,255,.15);--accent:#3ea6ff}}
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:640px;padding:32px 20px;background:var(--bg);color:var(--text);font:400 15px/24px Roboto,"Noto Sans JP",system-ui,sans-serif}
+h1{margin:0 0 4px;font-size:20px;line-height:28px}
+.ver{margin:0 0 20px;color:var(--text2)}
+.step{display:flex;gap:12px;margin:0 0 20px}
+.n{flex:none;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center}
+.step p{margin:2px 0 10px}
+.btn{display:inline-flex;align-items:center;height:40px;padding:0 20px;border:0;border-radius:20px;background:var(--text);color:var(--bg);font:500 14px Roboto,"Noto Sans JP",system-ui,sans-serif;cursor:pointer}
+.btn.tonal{background:var(--chip);color:var(--text)}
+.btn[disabled]{opacity:.5;cursor:default}
+.row{display:flex;flex-wrap:wrap;gap:8px}
+img{display:block;width:100%;height:auto;margin-top:12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+#folder{margin:0 0 8px;color:var(--text2);font-size:13px}
+#status{min-height:24px;margin:8px 0 0;font-weight:500}
+#status.err{color:#d93025}
+</style></head><body>
+<h1 data-i18n="upTitle"></h1>
+<p class="ver" id="ver"></p>
+<div class="step"><div class="n">1</div><div><p data-i18n="upStep1"></p>
+  <button type="button" class="btn tonal" id="openExt" data-i18n="guideOpenExt"></button>
+  <img src="folder-guide.png" id="shot" alt=""></div></div>
+<div class="step"><div class="n">2</div><div><p data-i18n="upStep2"></p>
+  <div id="folder"></div>
+  <div class="row"><button type="button" class="btn" id="go"></button><button type="button" class="btn tonal" id="repick" hidden data-i18n="upRepick"></button></div>
+  <p id="status"></p></div></div>
+<div class="step"><div class="n">3</div><div><p data-i18n="upStep3"></p></div></div>
+<script src="i18n.js"></script>
+<script src="update.js"></script>
+</body></html>
